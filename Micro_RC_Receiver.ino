@@ -217,13 +217,17 @@ void setup() {
   R2D2_tell();
 
   // LED setup
-  if (vehicleType == 4 || vehicleType == 5 ) indicators = false; // Indicators use the same pins as the MPU-6050, so they can't be used in vehicleType 4 or 5!
+  if ((vehicleType == 4 || vehicleType == 5 ) && indicatorsI2C) indicators = false; // Indicators use the same pins as the MPU-6050, so they can't be used in vehicleType 4 or 5!
 
   if (tailLights) tailLight.begin(A1); // A1 = Servo 2 Pin
   if (headLights) headLight.begin(0); // 0 = RXI Pin
-  if (indicators) {
+  if (indicators && indicatorsI2C) {
     indicatorL.begin(A4); // A4 = SDA Pin
     indicatorR.begin(A5); // A5 = SCL Pin
+  }
+  if (indicators && !indicatorsI2C) {
+    indicatorL.begin(10); // 10
+    indicatorR.begin(A6); // A6
   }
   if (beacons) beaconLights.begin(A3); // A3 = Servo 4 Pin
 

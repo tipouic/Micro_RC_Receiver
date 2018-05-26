@@ -4,6 +4,39 @@
 #include "Arduino.h"
 
 #define CONFIG_S_MAX // <- Select the correct vehicle configuration here before uploading!
+/*
+#define CONFIG_GENERIC_V10
+#define CONFIG_GENERIC_V13
+#define CONFIG_GENERIC_V13_HP
+#define CONFIG_TAMIYA_FIGHTER	// Tamiya NEO Fighter Buggy
+#define CONFIG_FIESTA			// WlToys K 1:28 Rally Fiesta
+#define CONFIG_MC_QUEEN			// Disney Lightning McQueen 95
+#define CONFIG_18429			// WLtoys 18429 Desert Buggy
+#define CONFIG_DINOCO			// Disney 95 "DINOCO"
+#define CONFIG_MUSTANG			// Maisto Mustang GT Fastback
+#define CONFIG_CHALLENGER		// Maisto Dodge Challenger
+#define CONFIG_PORSCHE			// GearGmax / KIDZTECH TOYS Porsche GT3 RS 4.0
+#define CONFIG_CCC				// Coke Can Car
+#define CONFIG_458				// Ferrari 458 Italia
+#define CONFIG_FY03				// Feiyue FY03 Eagle Buggy
+#define CONFIG_KD_SUMMIT		// KD-Summit S600 RC Truggy
+#define CONFIG_CAMARO			// Maisto Chevy Camaro SS
+#define CONFIG_CHEETAH			// JLB Racing Cheetah
+#define CONFIG_S_MAX			// Remo Hobby S Max
+#define CONFIG_LAFERRARI		// 1:18 LaFerrari
+#define CONFIG_A959				// Wltoys A959
+#define CONFIG_FORKLIFT			// Rui Chuang Forklift
+#define CONFIG_CATERPILLAR_TEST	// Caterpillar test vehicle
+#define CONFIG_SELF_BALANCING	// Self balancing robot
+#define CONFIG_R2D2				
+#define CONFIG_SCRATCH_TUTORIAL	// Receiver board scratch build tutorial
+#define CONFIG_MECCANO_6953		// MECCANO 6952 "Tuning Radio Control"
+#define CONFIG_MECCANO_V12
+#define CONFIG_MECCAPILLAR
+#define CONFIG_CRANE_CHASSIS	// MECCANO CRANE CHASSIS
+#define CONFIG_CRANE_TOWER		// MECCANO CRANE TOWER
+#define CONFIG_MECCANO_CAR_5
+*/
 
 //
 // =======================================================================================================
@@ -97,6 +130,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -153,6 +187,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -211,6 +246,7 @@ boolean escBrakeLights = false;
 boolean escBrakeLights = true;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -268,6 +304,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -325,6 +362,7 @@ byte vehicleType = 5; // MRSC vehicle!
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -382,6 +420,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -439,6 +478,7 @@ byte vehicleType = 5;
 boolean escBrakeLights = true;
 boolean tailLights = true;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -497,6 +537,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -558,6 +599,7 @@ byte mrscGain = 35; // 35%
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -615,6 +657,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -672,6 +715,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = true;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -729,6 +773,7 @@ byte vehicleType = 5; // MRSC vehicle!
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -788,6 +833,7 @@ byte vehicleType = 5;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -846,6 +892,7 @@ byte vehicleType = 5; // MRSC vehicle!
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -904,6 +951,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -962,6 +1010,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1019,6 +1068,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1078,6 +1128,7 @@ byte vehicleType = 5; // MPU6050 module required!
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1136,6 +1187,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1193,6 +1245,7 @@ byte vehicleType = 5;
 boolean escBrakeLights = true;
 boolean tailLights = true;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1251,6 +1304,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -1309,6 +1363,7 @@ byte vehicleType = 5; // MRSC Vehicle!
 boolean escBrakeLights = true;
 boolean tailLights = true;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1367,6 +1422,7 @@ byte vehicleType = 3; // Forklift mode
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = true;
 
@@ -1424,6 +1480,7 @@ byte vehicleType = 2; // 2 = caterpillar mode
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = true;
 
@@ -1482,6 +1539,7 @@ byte vehicleType = 2; // 2 = caterpillar mode
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -1540,6 +1598,7 @@ byte vehicleType = 4; // 4 = balancing mode
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1601,6 +1660,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -1658,6 +1718,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1715,6 +1776,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
@@ -1772,6 +1834,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = false;
+boolean indicatorsI2C = true;
 boolean indicators = false;
 boolean beacons = false;
 
@@ -1829,6 +1892,7 @@ byte vehicleType = 0;
 boolean escBrakeLights = false;
 boolean tailLights = false;
 boolean headLights = true;
+boolean indicatorsI2C = true;
 boolean indicators = true;
 boolean beacons = false;
 
