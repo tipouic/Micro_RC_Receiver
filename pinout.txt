@@ -1,0 +1,26 @@
+
+Pin	Ftc	Utilisation
+0	RX	RX			Headlight
+1	TX	TX			Momentary
+2		Motor 2 2
+3		Motor 2 PWM
+4		Motor 1 1
+5		Motor 2 1
+6		Motor 1 PWM
+7		NRF	CS
+8		NRF	CE
+9		Motor 1 2
+10		
+11	MO	NRF	MOSI
+12	MI	NRF	MISO
+13	SCK	NRF	SCK
+A0		Servo 1		
+A1		Servo 2		Taillights/brake light
+A2		Servo 3		ESC externe
+A3		Servo 4		Beacons (gyrophare)
+A4	SDA	I2C			Indicator L
+A5	SCL	I2C			Indicator R
+A6		
+A7		Surv bat
+
+
