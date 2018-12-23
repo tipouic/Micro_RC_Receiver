@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 
-#define CONFIG_S_MAX // <- Select the correct vehicle configuration here before uploading!
+#define CONFIG_WPL_B-36 // <- Select the correct vehicle configuration here before uploading!
 
 //
 // =======================================================================================================
@@ -31,6 +31,7 @@
   4 = balancing (see: https://www.youtube.com/watch?v=zse9-l2Yo3Y)
   5 = car with MRSC (Micro RC Stability Control). Similar with ABS, ESP, Traxxas Stability Management TSM. Potentiometer on A6 input of
   your transmitter required! (see: https://www.youtube.com/watch?v=IPve7QpdLBc&t=5s) Indicators can't be used in this mode (locked)!
+  6 = simple dual motor plane with differential thrust steering. No rudders.
 
   // MRSC
   #define MRSC_FIXED // Only use this definition, if you want to use an MRSC vehicle without a gain adjustment pot on your transmitter
@@ -48,6 +49,7 @@
   byte lim3L, lim3R;
   byte lim3Llow = 75, lim3Rlow = 105; // limited top speed angles for external ESC
   byte lim4L, lim4R; // Servo 4
+  #define TWO_SPEED_GEARBOX // Vehicle has a mechanical 2 speed shifting gearbox, switched by servo CH2. Not usable in combination with the "tailLights" option
 
   // Motor configuration
   int maxPWMfull; // (100% PWM is 255)
@@ -274,8 +276,8 @@ boolean beacons = false;
 // Servo limits
 byte lim1L = 41, lim1R = 131; // R 41, L131
 byte lim2L = 45, lim2R = 135;
-byte lim3L = 45, lim3R = 135;
-byte lim3Llow = 75, lim3Rlow = 105; // limited top speed angles!
+byte lim3L = 150, lim3R = 35; // ESC output signal reversed
+byte lim3Llow = 125, lim3Rlow = 60; // limited top speed angles!
 byte lim4L = 45, lim4R = 135;
 
 // Motor configuration
@@ -419,6 +421,63 @@ boolean engineSound = false;
 boolean toneOut = false;
 #endif
 
+// Tamiya VW GOLF Mk. 1 Racing Group 2 -------------------------------------------------------------------
+#ifdef CONFIG_TAMIYA_GOLF
+// Battery type
+boolean liPo = false; // ESC provides protection
+float cutoffVoltage = 4.9; // Regulated 6.0V supply from the ESC
+
+// Board type
+float boardVersion = 1.4;
+boolean HP = false;
+
+// Vehicle address
+int vehicleNumber = 2;
+
+// Vehicle type
+byte vehicleType = 0;
+
+// Lights
+boolean escBrakeLights = false;
+boolean tailLights = false;
+boolean headLights = true;
+boolean indicators = false;
+boolean beacons = false;
+
+// Servo limits
+byte lim1L = 110, lim1R = 60; // R 115, L62
+byte lim2L = 45, lim2R = 135;
+byte lim3L = 35, lim3R = 150; // ESC output signal not reversed
+byte lim3Llow = 60, lim3Rlow = 125; // limited top speed angles!
+byte lim4L = 45, lim4R = 135;
+
+// Motor configuration
+int maxPWMfull = 255;
+int maxPWMlimited = 170;
+int minPWM = 0;
+byte maxAccelerationFull = 7;
+byte maxAccelerationLimited = 12;
+
+// Variables for self balancing (vehicleType = 4) only!
+float tiltCalibration = 0.0;
+
+// Steering configuration
+byte steeringTorque = 255;
+
+// Motor 2 PWM frequency
+byte pwmPrescaler2 = 8; // 3936Hz
+
+// Additional Channels
+boolean TXO_momentary1 = true;
+boolean potentiometer1 = true;
+
+// Engine sound
+boolean engineSound = false;
+
+// Tone sound
+boolean toneOut = false;
+#endif
+
 // WLtoys 18429 Desert Buggy---------------------------------------------------------------------------
 #ifdef CONFIG_18429
 // Battery type
@@ -526,6 +585,63 @@ byte pwmPrescaler2 = 32;
 // Additional Channels
 boolean TXO_momentary1 = true;
 boolean potentiometer1 = false;
+
+// Engine sound
+boolean engineSound = false;
+
+// Tone sound
+boolean toneOut = false;
+#endif
+
+// JJRC Q46 Buggy -------------------------------------------------------------------
+#ifdef CONFIG_JJRC_Q46
+// Battery type
+boolean liPo = false; // ESC provides protection
+float cutoffVoltage = 4.9; // Regulated 6.0V supply from the ESC
+
+// Board type
+float boardVersion = 1.3;
+boolean HP = false;
+
+// Vehicle address
+int vehicleNumber = 3;
+
+// Vehicle type
+byte vehicleType = 0;
+
+// Lights
+boolean escBrakeLights = false;
+boolean tailLights = false;
+boolean headLights = false;
+boolean indicators = false;
+boolean beacons = false;
+
+// Servo limits
+byte lim1L = 125, lim1R = 55; // R125, L70 Steering reversed
+byte lim2L = 45, lim2R = 135;
+byte lim3L = 150, lim3R = 35; // ESC output signal reversed
+byte lim3Llow = 125, lim3Rlow = 60; // limited top speed angles!
+byte lim4L = 45, lim4R = 135;
+
+// Motor configuration
+int maxPWMfull = 255;
+int maxPWMlimited = 170;
+int minPWM = 0;
+byte maxAccelerationFull = 7;
+byte maxAccelerationLimited = 12;
+
+// Variables for self balancing (vehicleType = 4) only!
+float tiltCalibration = 0.0;
+
+// Steering configuration
+byte steeringTorque = 255;
+
+// Motor 2 PWM frequency
+byte pwmPrescaler2 = 8; // 3936Hz
+
+// Additional Channels
+boolean TXO_momentary1 = true;
+boolean potentiometer1 = true;
 
 // Engine sound
 boolean engineSound = false;
@@ -887,7 +1003,7 @@ boolean toneOut = false;
 // Feiyue FY03 Eagle Buggy---------------------------------------------------------------------------
 #ifdef CONFIG_FY03
 // Battery type
-boolean liPo = true;
+boolean liPo = false;
 float cutoffVoltage = 4.9; // Regulated 5.0V supply from the ESC
 
 // Board type
@@ -896,6 +1012,64 @@ boolean HP = false;
 
 // Vehicle address
 int vehicleNumber = 6;
+
+// Vehicle type
+byte vehicleType = 0;
+
+// Lights
+boolean escBrakeLights = false;
+boolean tailLights = false;
+boolean headLights = true;
+boolean indicators = false;
+boolean beacons = false;
+
+// Servo limits
+byte lim1L = 117, lim1R = 62; // R125, L70 Steering reversed
+byte lim2L = 45, lim2R = 135;
+byte lim3L = 150, lim3R = 35; // ESC output signal reversed
+byte lim3Llow = 110, lim3Rlow = 75; // limited top speed angles!
+byte lim4L = 45, lim4R = 135;
+
+// Motor configuration
+int maxPWMfull = 255;
+int maxPWMlimited = 170;
+int minPWM = 0;
+byte maxAccelerationFull = 7;
+byte maxAccelerationLimited = 12;
+
+// Variables for self balancing (vehicleType = 4) only!
+float tiltCalibration = 0.0;
+
+// Steering configuration
+byte steeringTorque = 255;
+
+// Motor 2 PWM frequency
+byte pwmPrescaler2 = 8; // 3936Hz
+
+// Additional Channels
+boolean TXO_momentary1 = false;
+boolean TXO_toggle1 = true;
+boolean potentiometer1 = true;
+
+// Engine sound
+boolean engineSound = false;
+
+// Tone sound
+boolean toneOut = false;
+#endif
+
+// HBX 12891 DUNE THUNDER Buggy---------------------------------------------------------------------------
+#ifdef CONFIG_HBX_12891
+// Battery type
+boolean liPo = false; // protected by the ESC
+float cutoffVoltage = 3.5; // Regulated 5.0V supply from the ESC, but weak 18650 batteries!
+
+// Board type
+float boardVersion = 1.4;
+boolean HP = false;
+
+// Vehicle address
+int vehicleNumber = 7;
 
 // Vehicle type
 byte vehicleType = 0;
@@ -1143,7 +1317,7 @@ boolean beacons = false;
 byte lim1L = 140, lim1R = 45; // Steering reversed
 byte lim2L = 45, lim2R = 135;
 byte lim3L = 150, lim3R = 35; // ESC output signal reversed
-byte lim3Llow = 115, lim3Rlow = 70; // limited top speed angles!
+byte lim3Llow = 125, lim3Rlow = 60; // limited top speed angles!
 byte lim4L = 45, lim4R = 135;
 
 // Motor configuration
@@ -1164,7 +1338,7 @@ byte pwmPrescaler2 = 8; // 3936Hz
 
 // Additional Channels
 boolean TXO_momentary1 = true;
-boolean potentiometer1 = true;
+boolean potentiometer1 = true; // true = MRSC knob linked to servo CH4!
 
 // Engine sound
 boolean engineSound = false;
@@ -1255,11 +1429,70 @@ boolean indicators = true;
 boolean beacons = false;
 
 // Servo limits
-byte lim1L = 50, lim1R = 140; // R74  L116
+byte lim1L = 50, lim1R = 140; // R50  L140
 byte lim2L = 45, lim2R = 135;
 byte lim3L = 65, lim3R = 120; // +/-25° is still full throttle with the JMT-10A ESC! (Forward, Reverse)
 byte lim3Llow = 75, lim3Rlow = 110; // limited top speed angles! A slight offset towards reverse is required with this ESC
 byte lim4L = 45, lim4R = 135;
+
+// Motor configuration
+int maxPWMfull = 255;
+int maxPWMlimited = 170;
+int minPWM = 0;
+byte maxAccelerationFull = 7;
+byte maxAccelerationLimited = 12;
+
+// Variables for self balancing (vehicleType = 4) only!
+float tiltCalibration = 0.0;
+
+// Steering configuration
+byte steeringTorque = 255;
+
+// Motor 2 PWM frequency
+byte pwmPrescaler2 = 8; // 3936Hz
+
+// Additional Channels
+boolean TXO_momentary1 = true;
+boolean TXO_toggle1 = false;
+boolean potentiometer1 = false;
+
+// Engine sound
+boolean engineSound = false;
+
+// Tone sound
+boolean toneOut = false;
+#endif
+
+// 1:16 WPL B-36 Russian URAL-4320 Military Command Truck-------------------------------------------------
+#ifdef CONFIG_WPL_B-36
+// Battery type
+boolean liPo = false;
+float cutoffVoltage = 4.5; // 5V receiver supply voltage surveillance from BEC only!
+
+// Board type
+float boardVersion = 1.2;
+boolean HP = false;
+
+// Vehicle address
+int vehicleNumber = 9;
+
+// Vehicle type
+byte vehicleType = 0;
+
+// Lights
+boolean escBrakeLights = false;
+boolean tailLights = false;
+boolean headLights = true;
+boolean indicators = true;
+boolean beacons = false;
+
+// Servo limits
+byte lim1L = 67, lim1R = 137; // R67  L137
+byte lim2L = 45, lim2R = 120; // Gearbox shifter limits (1. and 2. gear)
+byte lim3L = 65, lim3R = 125; // +/-25° is still full throttle with the JMT-10A ESC! (Forward, Reverse)
+byte lim3Llow = 65, lim3Rlow = 125; // same setting (full throttle), because of shifting gearbox!
+byte lim4L = 45, lim4R = 135;
+#define TWO_SPEED_GEARBOX // Vehicle has a mechanical 2 speed shifting gearbox, switched by servo CH2. Not usable in combination with the "tailLights" option
 
 // Motor configuration
 int maxPWMfull = 255;
@@ -1568,6 +1801,64 @@ byte pwmPrescaler2 = 32;
 
 // Additional Channels
 boolean TXO_momentary1 = false;
+boolean TXO_toggle1 = false;
+boolean potentiometer1 = false;
+
+// Engine sound
+boolean engineSound = false;
+
+// Tone sound
+boolean toneOut = false;
+#endif
+
+// PIPER J3 CUB Plane-----------------------------------------------------------------------
+#ifdef PIPER_J3
+// Battery type
+boolean liPo = true;
+float cutoffVoltage = 3.1;
+
+// Board type
+float boardVersion = 1.4;
+boolean HP = false;
+
+// Vehicle address
+int vehicleNumber = 10;
+
+// Vehicle type
+byte vehicleType = 6; // 6 = differential thrust controlled plane
+
+// Lights
+boolean escBrakeLights = false;
+boolean tailLights = false;
+boolean headLights = false;
+boolean indicators = false;
+boolean beacons = false;
+
+// Servo limits
+byte lim1L = 45, lim1R = 135;
+byte lim2L = 45, lim2R = 135;
+byte lim3L = 45, lim3R = 135;
+byte lim3Llow = 45, lim3Rlow = 135; // no limited top speed angles!
+byte lim4L = 45, lim4R = 135;
+
+// Motor configuration
+int maxPWMfull = 255;
+int maxPWMlimited = 170;
+int minPWM = 0;
+byte maxAccelerationFull = 3;
+byte maxAccelerationLimited = 12;
+
+// Variables for self balancing (vehicleType = 4) only!
+float tiltCalibration = 0.0;
+
+// Steering configuration
+byte steeringTorque = 255;
+
+// Motor 2 PWM frequency
+byte pwmPrescaler2 = 32;
+
+// Additional Channels
+boolean TXO_momentary1 = true;
 boolean TXO_toggle1 = false;
 boolean potentiometer1 = false;
 
